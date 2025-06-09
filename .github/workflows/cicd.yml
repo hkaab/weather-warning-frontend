@@ -30,6 +30,9 @@ jobs:
     - name: Install Node.js dependencies
       run: npm install # Install project dependencies (including 'serve')
 
+    - name: Install 'serve' globally
+      run: npm install -g serve # Install 'serve' globally to serve the React app
+      
     - name: Build React application for production
       run: npm run build # Create the production build in the 'build/' directory
 
@@ -39,7 +42,7 @@ jobs:
         cd build
         # Create a zip file containing the *contents* of the build directory at its root
         # This is crucial for Elastic Beanstalk to serve index.html directly.
-        zip -r ../deploy.zip .
+        zip -r ..deploy.zip .
         # Navigate back to the repository root
         cd ..
       
