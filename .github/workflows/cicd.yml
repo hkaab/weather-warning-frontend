@@ -1,0 +1,69 @@
+# .github/workflows/deploy.yml
+name: Flood Warning App to AWS Beanstalk
+
+on:
+  push:
+    branches:
+      - main # Trigger the workflow on pushes to the 'main' branch
+
+env:
+  AWS_REGION: us-east-1 
+  EB_APPLICATION_NAME: flood-warning-frontend-app
+  EB_ENVIRONMENT_NAME: flood-warning-frontend-test
+jobs:
+  deploy:
+    runs-on: ubuntu-latest # Use the latest Ubuntu runner
+
+    # Optional: You can specify an environment if you have deployment rules/secrets for it in GitHub
+    # environment: production
+
+    steps:
+    - name: Checkout repository code
+      uses: actions/checkout@v4 # Action to checkout your repository
+
+    - name: Set up Node.js environment
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18' # Specify the Node.js version your React app uses
+        cache: 'npm' # Cache npm dependencies for faster builds
+
+    - name: Install Node.js dependencies
+      run: npm install # Install project dependencies (including 'serve')
+
+    - name: Build React application for production
+      run: npm run build # Create the production build in the 'build/' directory
+
+    - name: Create deployment package (ZIP artifact)
+      run: |
+        # Navigate into the build directory
+        cd build
+        # Create a zip file containing the *contents* of the build directory at its root
+        # This is crucial for Elastic Beanstalk to serve index.html directly.
+        zip -r ../deploy.zip .
+        # Navigate back to the repository root
+        cd ..
+      
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        # AWS Access Key ID and Secret Access Key stored as GitHub repository secrets
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }} # Use the region defined in env
+
+    - name: Deploy application to AWS Elastic Beanstalk
+      uses: einaregilsson/beanstalk-deploy@v22 
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}   
+        application_name: ${{ env.EB_APPLICATION_NAME }}
+        environment_name: ${{ env.EB_ENVIRONMENT_NAME }}
+        version_label: github-action-${{ github.sha }} # Use the Git commit SHA as a unique version label for tracking
+        region: ${{ env.AWS_REGION }}
+        deployment_package: deploy.zip # Path to the created deployment package
+        wait_for_deployment: true # Wait for the deployment to complete before proceeding
+
+    - name: Deployment verification (optional)
+      run: |
+        echo "Successfully deployed ${{ env.EB_APPLICATION_NAME }} to environment ${{ env.EB_ENVIRONMENT_NAME }}"
+        echo "New version label: ${{ github.sha }}"

@@ -1,4 +1,5 @@
 # Getting Started with Create React App
+![workflow](https://github.com/hkaab/flood-warning-frontend/actions/workflows/cicd.yml/badge.svg)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
