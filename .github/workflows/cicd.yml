@@ -25,23 +25,16 @@ jobs:
         cache: 'npm' # Cache npm dependencies for faster builds
 
     - name: Install dependencies
-      run: npm install # Install project dependencies (including 'serve')
-
-    - name: Install 'serve'
-      run: npm install -g serve # Install 'serve' globally to serve the React app
+      run: npm install 
 
     - name: Build React application
-      run: npm run build # Create the production build in the 'build/' directory
+      run: npm run build 
 
     - name: Create deployment package
       run: |
-        # Navigate into the build directory
-        cd build
         # Create a zip file containing the *contents* of the build directory at its root
         # This is crucial for Elastic Beanstalk to serve index.html directly.
-        zip -r ../deploy.zip .
-        # Navigate back to the repository root
-        cd ..
+        zip -r deploy.zip .
       
     - name: Deploy application to AWS Elastic Beanstalk
       uses: einaregilsson/beanstalk-deploy@v22 
