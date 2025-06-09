@@ -1,3 +1,4 @@
+// This file is used to log performance metrics in a React application.
 import { ReportHandler } from 'web-vitals';
 
 const reportWebVitals = (onPerfEntry?: ReportHandler) => {

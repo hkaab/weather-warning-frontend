@@ -134,7 +134,7 @@ function App() {
                 {loadingWarnings && <p className="loading-message">Fetching warning IDs...</p>}
                 {warningsError && <p className="error-message">Error: {warningsError}</p>}
 
-                {!loadingWarnings && !warningsError && (
+                {!loadingWarnings && !warningsError && selectedState && (
                     <WarningList
                         warningIds={warningIds}
                         onSelectWarning={handleSelectWarning}
