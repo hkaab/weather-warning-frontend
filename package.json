@@ -27,7 +27,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start-static": "serve -s build -l 80"
+    "start-static": "serve build/ --single --port 3000"
   },
   "eslintConfig": {
     "extends": [
