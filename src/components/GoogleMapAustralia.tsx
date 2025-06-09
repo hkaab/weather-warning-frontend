@@ -71,6 +71,7 @@ const createMarkerIcon = (count: number | null, isSelected: boolean, isLoaded: b
 
 
 function GoogleMapAustralia({ selectedState, onSelectState }: GoogleMapAustraliaProps) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [map, setMap] = useState<google.maps.Map | null>(null);
     const [activeMarker, setActiveMarker] = useState<string | null>(null);
     const [warningsCount, setWarningsCount] = useState<{ [key: string]: number | null }>(() => {
