@@ -15,14 +15,14 @@ function App() {
     const [warningIds, setWarningIds] = useState<string[]>([]);
     const [loadingWarnings, setLoadingWarnings] = useState<boolean>(false);
     const [warningsError, setWarningsError] = useState<string | null>(null);
-
+    const [warningsMap, setWarningMap] = useState(new Map<string, ParsedWarningDetail>()); // Map to store warning details by ID
     // State for selected warning details (for the modal)
     const [selectedWarningId, setSelectedWarningId] = useState<string | null>(null);
     const [warningDetails, setWarningDetails] = useState<ParsedWarningDetail | null>(null);
     const [loadingDetails, setLoadingDetails] = useState<boolean>(false);
     const [detailsError, setDetailsError] = useState<string | null>(null);
 
-    // NEW: Effect to get user's initial location on component mount
+    // Effect to get user's initial location on component mount
     useEffect(() => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -53,7 +53,7 @@ function App() {
         }
     }, []); // Empty dependency array means this runs only once on mount
 
-    // Effect to fetch WARNING IDs when selectedState changes (unchanged)
+    // Effect to fetch WARNING IDs when selectedState changes 
     useEffect(() => {
         if (selectedState) {
             setLoadingWarnings(true);
@@ -71,7 +71,7 @@ function App() {
                 })
                 .finally(() => {
                     setLoadingWarnings(false);
-                });
+                });         
         } else {
             setWarningIds([]);
             setWarningsError(null);
@@ -79,7 +79,8 @@ function App() {
         }
     }, [selectedState]);
 
-    // Effect to fetch warning details when selectedWarningId changes (for modal) (unchanged)
+    
+    // Effect to fetch warning details when selectedWarningId changes (for modal) 
     useEffect(() => {
         if (selectedWarningId) {
             setLoadingDetails(true);
@@ -99,7 +100,22 @@ function App() {
         }
     }, [selectedWarningId]);
 
-    // Handlers for user interactions (unchanged)
+    // Effect to fetch warning details when warningIds changes (for initial load of details)
+    useEffect(() => {
+        if (warningIds.length === 0) return; // No IDs to fetch details for
+        warningIds.forEach((id) => {
+            getWarningDetails(id)
+                .then((_: ParsedWarningDetail) => {
+                    setWarningMap((prevMap) => {
+                        const newMap = new Map(prevMap);
+                        newMap.set(id, _);
+                        return newMap;
+                    });
+                }).catch((_: any) => {}).finally(() => {})});
+            }
+    , [warningIds]);
+
+    // Handlers for user interactions 
     const handleSelectState = (stateCode: string) => {
         setSelectedState(stateCode);
     };
@@ -136,7 +152,9 @@ function App() {
 
                 {!loadingWarnings && !warningsError && selectedState && (
                     <WarningList
+                        stateCode={selectedState}
                         warningIds={warningIds}
+                        warningsMap={warningsMap}
                         onSelectWarning={handleSelectWarning}
                     />
                 )}

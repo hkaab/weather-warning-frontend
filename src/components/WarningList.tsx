@@ -1,27 +1,37 @@
 // src/components/WarningList.tsx
 import React from 'react';
-// No longer importing WarningSummary here directly for the list, as it receives string[]
-// import { WarningSummary } from '../types/api'; // Removed as it's not directly used for the prop type anymore
+import { ParsedWarningDetail } from '../types/api';
 
+// Define the props for the WarningList component
 interface WarningListProps {
-    warningIds: string[]; // FIX: Prop name changed from 'warnings' to 'warningIds'
+    stateCode: string;
+    warningIds: string[];
+    warningsMap: Map<string, ParsedWarningDetail>;
     onSelectWarning: (warningId: string) => void;
 }
-
-function WarningList({ warningIds, onSelectWarning }: WarningListProps) { // FIX: Destructure 'warningIds' here
+function WarningList({ stateCode,warningIds,warningsMap, onSelectWarning }: WarningListProps) { 
     if (!warningIds || warningIds.length === 0) {
         return <p className="no-warnings-message">No warnings found for this state, or select a state.</p>;
     }
 
     return (
         <div className="warning-list-container">
-            <h2>Current Flood Warning IDs ({warningIds.length})</h2> {/* Using warningIds.length */}
-            <p className="list-instruction">Click an ID to view details:</p>
+            <h2>Current Flood Warning IDs ({warningIds.length}) for {stateCode}</h2> {/* Using warningIds.length */}
             <ul className="warning-list">
                 {warningIds.map((id: string) => ( // Iterate over the IDs
                     <li key={id} className="warning-item" onClick={() => onSelectWarning(id)}>
                         <h3>Warning ID: {id}</h3> {/* Displaying the ID */}
-                        <p className="view-details-prompt">(Click to view details)</p>
+                        <p className="warning-detail-issued">
+                            Issued: {warningsMap.get(id)
+                                ? new Date(warningsMap.get(id)!.issuedAt).toLocaleString()
+                                : 'Not available'}
+                        </p>
+                        <p className="warning-detail-headline">
+                            {warningsMap.get(id)?.headline}
+                        </p> 
+                        {warningsMap.get(id)?.description && (
+                          <p className="view-details-prompt">(Click to view details)</p>
+                        )}
                     </li>
                 ))}
             </ul>

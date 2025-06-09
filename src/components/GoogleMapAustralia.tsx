@@ -97,6 +97,8 @@ function GoogleMapAustralia({ selectedState, onSelectState }: GoogleMapAustralia
                         ...prevCounts,
                         [markerData.code]: ids.length
                     }));
+                    console.log(`Fetched ${ids.length} warnings for ${markerData.code}`);
+                    console.log(`Count for ${markerData.code}:`, ids.length);
                 } catch (error) {
                     console.error(`Error fetching count for ${markerData.code}:`, error);
                     setWarningsCount(prevCounts => ({
@@ -107,7 +109,6 @@ function GoogleMapAustralia({ selectedState, onSelectState }: GoogleMapAustralia
             });
         }
     }, [isLoaded]);
-
 
     const onLoad = useCallback((mapInstance: google.maps.Map) => {
         setMap(mapInstance);
