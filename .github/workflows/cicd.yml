@@ -9,7 +9,7 @@ on:
 env:
   AWS_REGION: us-east-1 
   EB_APPLICATION_NAME: flood-warning-frontend-app
-  EB_ENVIRONMENT_NAME: flood-warning-frontend-test
+  EB_ENVIRONMENT_NAME: flood-warning-frontend-app-test
 jobs:
   deploy:
     runs-on: ubuntu-latest # Use the latest Ubuntu runner
