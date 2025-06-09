@@ -39,7 +39,7 @@ jobs:
         cd build
         # Create a zip file containing the *contents* of the build directory at its root
         # This is crucial for Elastic Beanstalk to serve index.html directly.
-        zip -r deploy.zip build/*
+        zip -r deploy.zip .
         # Navigate back to the repository root
         cd ..
       
