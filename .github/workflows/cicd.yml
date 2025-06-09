@@ -27,6 +27,9 @@ jobs:
     - name: Install dependencies
       run: npm install 
 
+    - name: Install dependencies
+      run: npm install -g serve # Install serve globally for serving static files
+
     - name: Build React application
       run: npm run build 
 
