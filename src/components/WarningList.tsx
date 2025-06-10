@@ -1,6 +1,7 @@
 // src/components/WarningList.tsx
 import React from 'react';
 import { ParsedWarningDetail } from '../types/api';
+import { isValidDateString } from '../utils/commonUtils';
 
 // Define the props for the WarningList component
 interface WarningListProps {
@@ -19,19 +20,19 @@ function WarningList({ stateCode,warningIds,warningsMap, onSelectWarning }: Warn
             <h2>Current Flood Warning IDs ({warningIds.length}) for {stateCode}</h2> {/* Using warningIds.length */}
             <ul className="warning-list">
                 {warningIds.map((id: string) => ( // Iterate over the IDs
-                    <li key={id} className="warning-item" onClick={() => onSelectWarning(id)}>
+                    <li key={id} className="warning-item" onClick={warningsMap.get(id)?.description?() => onSelectWarning(id): undefined}>
                         <h3>Warning ID: {id}</h3> {/* Displaying the ID */}
                         <p className="warning-detail-issued">
-                            Issued: {warningsMap.get(id)
-                                ? new Date(warningsMap.get(id)!.issuedAt).toLocaleString()
+                            {warningsMap.get(id)
+                                ? `Issued:${isValidDateString(warningsMap.get(id)!.issuedAt)? new Date(warningsMap.get(id)!.issuedAt).toLocaleString(): '-'}`
                                 : 'loading...'}
                         </p>
                         <p className="warning-detail-headline">
                             {warningsMap.get(id)?.headline}
                         </p> 
-                        {warningsMap.get(id)?.description && (
-                          <p className="view-details-prompt">(Click to view details)</p>
-                        )}
+                        <p className="view-details-prompt">
+                            {warningsMap.get(id)?.description?'(Click to view details)':''}
+                        </p>
                     </li>
                 ))}
             </ul>
