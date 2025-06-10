@@ -87,6 +87,13 @@ function App() {
             setDetailsError(null);
             setWarningDetails(null);
 
+            if (warningsMap.has(selectedWarningId)) {
+                // If we already have the details in the map, use them directly
+                setWarningDetails(warningsMap.get(selectedWarningId) || null);
+                setLoadingDetails(false);
+                return;
+            }
+            
             getWarningDetails(selectedWarningId)
                 .then((data: ParsedWarningDetail) => {
                     setWarningDetails(data);
