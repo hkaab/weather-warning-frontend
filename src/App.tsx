@@ -105,7 +105,7 @@ function App() {
                     setLoadingDetails(false);
                 });
         }
-    }, [selectedWarningId]);
+    }, [selectedWarningId, warningsMap]);
 
     // Effect to fetch warning details when warningIds changes (for initial load of details)
     useEffect(() => {
