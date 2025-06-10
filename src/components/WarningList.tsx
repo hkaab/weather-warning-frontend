@@ -11,22 +11,12 @@ interface WarningListProps {
     onSelectWarning: (warningId: string) => void;
 }
 function WarningList({ stateCode, warningIds, warningsMap, onSelectWarning }: WarningListProps) {
-    // Use useMemo to sort the warningIds based on their issuedAt date.
+    // Use useMemo to desc sort the warningIds.
     // This memoization prevents unnecessary re-sorting on every render
     // unless warningIds or warningsMap change.
     const sortedWarningIds = useMemo(() => {
-        // Create a shallow copy of warningIds to avoid mutating the prop directly.
         const idsToSort = [...warningIds];
-
-        idsToSort.sort((a, b) => {
-            if (a < b) {
-                return 1;
-            }
-            if (a > b) {
-                return -1;
-            }
-            return 0;
-        });
+        idsToSort.sort((a, b) => (a > b ? -1 : 1)); // Default sort to ensure consistent order
         return idsToSort;
     }, [warningIds]); // Dependencies for useMemo
 
