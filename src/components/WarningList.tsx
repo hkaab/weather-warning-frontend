@@ -24,7 +24,7 @@ function WarningList({ stateCode,warningIds,warningsMap, onSelectWarning }: Warn
                         <p className="warning-detail-issued">
                             Issued: {warningsMap.get(id)
                                 ? new Date(warningsMap.get(id)!.issuedAt).toLocaleString()
-                                : 'Not available'}
+                                : 'loading...'}
                         </p>
                         <p className="warning-detail-headline">
                             {warningsMap.get(id)?.headline}

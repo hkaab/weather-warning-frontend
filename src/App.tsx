@@ -5,7 +5,7 @@ import GoogleMapAustralia from './components/GoogleMapAustralia';
 import WarningList from './components/WarningList';
 import WarningDetailModal from './components/WarningDetailModal';
 import { getWarningsByState, getWarningDetails } from './api';
-import { getStateFromCoordinates } from './utils/locationUtils'; // NEW IMPORT
+import { getStateFromCoordinates } from './utils/locationUtils'; 
 import './App.css';
 import { ParsedWarningDetail } from './types/api';
 
