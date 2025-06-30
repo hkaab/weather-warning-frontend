@@ -1,7 +1,7 @@
 // src/api.ts
 import { ParsedWarningDetail, ApiResponseWarningsObject, RawWarningApiResponse } from './types/api';
 
-const API_BASE_URL: string = "http://flood-warning-api-test.us-east-1.elasticbeanstalk.com";
+const API_BASE_URL: string = "http://weather-warning-test.ap-southeast-2.elasticbeanstalk.com";
 
 export async function getWarningsByState(stateCode: string): Promise<string[]> {
     try {
