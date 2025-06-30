@@ -1,5 +1,5 @@
 # .github/workflows/deploy.yml
-name: Flood Warning App to AWS Beanstalk
+name: Weather Warning App to AWS Beanstalk
 
 on:
   push:
