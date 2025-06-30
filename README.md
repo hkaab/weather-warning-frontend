@@ -1,6 +1,6 @@
-# National Flood Data Demo App (Australia)
+# National Weather Warning Data Demo App (Australia)
  
-![workflow](https://github.com/hkaab/flood-warning-frontend/actions/workflows/cicd.yml/badge.svg)
+![workflow](https://github.com/hkaab/weather-warning-frontend/actions/workflows/cicd.yml/badge.svg)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
