@@ -140,7 +140,7 @@ function App() {
     return (
         <div className="App">
             <header className="App-header">
-                <h1>Australian Flood Warnings</h1>
+                <h1>Australia Weather Warnings</h1>
             </header>
 
             <main className="App-main">
