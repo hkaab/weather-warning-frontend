@@ -8,8 +8,8 @@ on:
 
 env:
   AWS_REGION: ap-southeast-2
-  EB_APPLICATION_NAME: weather-warning-app
-  EB_ENVIRONMENT_NAME: weather-warning-app-test
+  EB_APPLICATION_NAME: weather-warning-frontend
+  EB_ENVIRONMENT_NAME: weather-warning-frontend-test
 jobs:
   deploy:
     runs-on: ubuntu-latest # Use the latest Ubuntu runner
