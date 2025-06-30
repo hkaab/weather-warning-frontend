@@ -7,9 +7,9 @@ on:
       - master # Trigger the workflow on pushes to the 'main' branch
 
 env:
-  AWS_REGION: us-east-1 
-  EB_APPLICATION_NAME: flood-warning-frontend-app
-  EB_ENVIRONMENT_NAME: flood-warning-frontend-app-test
+  AWS_REGION: ap-southeast-2
+  EB_APPLICATION_NAME: weather-warning-app
+  EB_ENVIRONMENT_NAME: weather-warning-app-test
 jobs:
   deploy:
     runs-on: ubuntu-latest # Use the latest Ubuntu runner
